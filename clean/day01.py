@@ -1,5 +1,6 @@
 from collections import deque
 from typing import List
+from functools import reduce
 
 
 def get_input() -> List[int]:
@@ -9,13 +10,18 @@ def get_input() -> List[int]:
 
 
 def part_one(input: List[int]) -> int:
-    previous_number = 9999999
-    ans = 0
-    for number in input:
-        if number > previous_number:
-            ans += 1
-        previous_number = number
-    return ans
+    return reduce(
+        lambda acc, pair: int(pair[1] > pair[0]) + acc,
+        zip(input, input[1:]),
+        0
+    )
+
+
+def part_one_alt(input: List[int]) -> int:
+    return sum(map(
+        lambda pair: int(pair[1] > pair[0]), 
+        zip(input, input[1:])
+    ))
 
 
 def part_two(input: List[int]) -> int:
@@ -32,7 +38,21 @@ def part_two(input: List[int]) -> int:
     return ans
 
 
+def part_two_alt(input: List[int]) -> int:
+    return sum(
+        map(
+            lambda pair: int(sum(pair[1]) > sum(pair[0])),
+            zip(
+                zip(input, input[1:], input[2:]),
+                zip(input[1:], input[2:], input[3:])
+            )
+        )
+    )
+
+
 if __name__ == '__main__':
     input = get_input()
     print(part_one(input))
+    print(part_one_alt(input))
     print(part_two(input))
+    print(part_two_alt(input))
