@@ -19,7 +19,7 @@ def part_one(input: List[int]) -> int:
 
 def part_one_alt(input: List[int]) -> int:
     return sum(map(
-        lambda pair: int(pair[1] > pair[0]), 
+        lambda pair: int(pair[1] > pair[0]),
         zip(input, input[1:])
     ))
 
@@ -50,9 +50,18 @@ def part_two_alt(input: List[int]) -> int:
     )
 
 
+def part_two_ext(input: List[int]) -> int:
+    return part_one(
+        list(map(sum, zip(
+            input, input[1:], input[2:]
+        )))
+    )
+
+
 if __name__ == '__main__':
     input = get_input()
     print(part_one(input))
     print(part_one_alt(input))
     print(part_two(input))
     print(part_two_alt(input))
+    print(part_two_ext(input))
